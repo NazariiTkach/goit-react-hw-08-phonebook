@@ -13,19 +13,6 @@ const contactsInitialState = {
   error: null,
 };
 
-const updateContact = (contactsArray, id, name, number) => {
-  return contactsArray.map(contact => {
-    if (contact.id === id) {
-      return {
-        id,
-        name: name,
-        number: number,
-      };
-    }
-    return contact;
-  });
-};
-
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: contactsInitialState,
@@ -45,11 +32,6 @@ const contactsSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.items = state.items.filter(task => task.id !== action.payload.id);
-      })
-      .addCase(editContact.fulfilled, (state, action) => {
-        const { id, name, number } = action.payload;
-        const updatedContacts = updateContact(state.items, id, name, number);
-        state.items = updatedContacts;
       })
       .addMatcher(
         isAnyOf(
